@@ -7,13 +7,7 @@
     <title>SQL PREMIUM HUB | Best CC Shop & Card Shop Online</title>
     <meta name="description" content="Welcome to SQL PREMIUM HUB. The best CC Shop and Card Shop for high balance non-Vv cards. Fast delivery and 100% working cards by Rizwan.">
     <meta name="keywords" content="cc shop, card shop, carding, sql premium hub, rizwan cards, non-vv cards shop, buy cards online">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://sqlccshop.github.io/cc/">
-
-    <meta property="og:title" content="SQL PREMIUM HUB | Best CC Shop">
-    <meta property="og:description" content="Get the best working cards at SQL Premium Hub. High balance and fast delivery.">
-    <meta property="og:type" content="website">
-
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --gold: #ffcc00; --dark: #0b0b0b; --wa: #25d366; --red: #ff4444; --paytm: #00baf2; }
@@ -28,7 +22,7 @@
 
         /* Sidebar */
         #side-menu { position: fixed; top: 0; right: -280px; width: 270px; height: 100%; background: #0a0a0a; z-index: 4000; transition: 0.3s; padding-top: 60px; border-left: 2px solid var(--gold); }
-        .menu-item { padding: 18px 25px; border-bottom: 1px solid #1a1a1a; display: flex; align-items: center; gap: 15px; color: white; text-decoration: none; font-weight: bold; }
+        .menu-item { padding: 18px 25px; border-bottom: 1px solid #1a1a1a; display: flex; align-items: center; gap: 15px; color: white; text-decoration: none; font-weight: bold; cursor: pointer; }
         .menu-item i { color: var(--gold); width: 20px; }
 
         /* Cards Grid */
@@ -41,8 +35,14 @@
         .price { color: #00ff88; font-size: 1.3rem; font-weight: bold; display: block; margin-bottom: 10px; }
         .buy-btn { background: var(--gold); color: #000; border: none; width: 100%; padding: 12px; border-radius: 10px; font-weight: 900; cursor: pointer; }
 
-        /* AI Smart Window */
-        #ai-window { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 5000; display: none; flex-direction: column; }
+        /* New Sale Page UI */
+        #sale-page { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 7000; display: none; flex-direction: column; overflow-y: auto; padding-top: 80px; }
+        .sale-header { position: fixed; top: 0; width: 100%; background: #111; padding: 20px; border-bottom: 1px solid var(--gold); display: flex; align-items: center; gap: 20px; z-index: 7100; }
+
+        /* Shared Payment & AI Windows */
+        #ai-window, #pay-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 5000; display: none; flex-direction: column; }
+        #pay-modal { background: rgba(0,0,0,0.98); z-index: 8000; justify-content: center; align-items: center; padding: 20px; }
+        
         .ai-header { background: #111; padding: 15px; display: flex; align-items: center; gap: 15px; font-weight: bold; border-bottom: 1px solid var(--gold); }
         .ai-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
         .ai-footer { background: #111; padding: 12px; display: flex; gap: 10px; border-top: 1px solid #222; }
@@ -51,8 +51,6 @@
         .msg-ai { background: #222; align-self: flex-start; }
         .msg-user { background: #005c4b; align-self: flex-end; }
 
-        /* Payment Modal (Icons & Paytm Added) */
-        #pay-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 6000; display: none; justify-content: center; align-items: center; padding: 20px; }
         .pay-box { background: #111; padding: 25px; border: 2px solid var(--gold); border-radius: 25px; width: 100%; max-width: 400px; text-align: center; }
         .p-btn { background: #1a1a1a; margin: 8px 0; padding: 12px; border-radius: 12px; display: flex; align-items: center; gap: 15px; color: white; text-decoration: none; border: 1px solid #333; font-weight: bold; cursor: pointer; }
         .p-btn img { width: 25px; height: 25px; border-radius: 5px; }
@@ -73,12 +71,46 @@
 
     <div id="side-menu">
         <i class="fas fa-times" onclick="toggleMenu()" style="position:absolute; top:15px; left:15px; color:var(--red); font-size:1.5rem;"></i>
+        <a class="menu-item" onclick="toggleSale()"><i class="fas fa-shopping-bag" style="color:#ff4444"></i> Sale Products</a>
         <a href="#" class="menu-item" onclick="location.reload()"><i class="fas fa-sync"></i> Refresh Hub</a>
         <a href="https://t.me/SQL_RRR" class="menu-item" style="color:#0088cc"><i class="fab fa-telegram"></i> Join Telegram</a>
         <a href="https://wa.me/919012277862" class="menu-item" style="color:var(--wa)"><i class="fab fa-whatsapp"></i> Contact Owner</a>
     </div>
 
     <div class="container" id="grid"></div>
+
+    <div id="sale-page">
+        <div class="sale-header">
+            <i class="fas fa-arrow-left" onclick="toggleSale()" style="font-size: 1.5rem; color: var(--gold);"></i>
+            <span style="font-size: 1.2rem; font-weight: 900;">PREMIUM SERVICES SALE</span>
+        </div>
+        <div class="container" style="height: auto; padding-top: 20px;">
+            <div class="card">
+                <img src="https://img.icons8.com/color/96/youtube-play.png"><span class="live-tag">LIVE ✅</span>
+                <b>YouTube Premium</b><span class="card-bal">1 Month Plan</span>
+                <p class="card-info">Ad-Free | Background Play</p><span class="price">₹139</span>
+                <button class="buy-btn" onclick="openPay('139')">Buy Now</button>
+            </div>
+            <div class="card">
+                <img src="https://img.icons8.com/color/96/video-playlist.png"><span class="live-tag">LIVE ✅</span>
+                <b>Sony LIV Premium</b><span class="card-bal">All Access Plan</span>
+                <p class="card-info">Live Sports | Movies</p><span class="price">₹120</span>
+                <button class="buy-btn" onclick="openPay('120')">Buy Now</button>
+            </div>
+            <div class="card" style="opacity: 0.6;">
+                <img src="https://img.icons8.com/color/96/disney-plus.png"><span class="live-tag" style="color:orange">COMING SOON</span>
+                <b>Hotstar VIP</b><span class="card-bal">N/A</span>
+                <p class="card-info">Updating Stocks...</p><span class="price">₹---</span>
+                <button class="buy-btn" style="background:#444;">Soon</button>
+            </div>
+            <div class="card" style="opacity: 0.6;">
+                <img src="https://img.icons8.com/color/96/movie.png"><span class="live-tag" style="color:orange">COMING SOON</span>
+                <b>Jio Cinema</b><span class="card-bal">N/A</span>
+                <p class="card-info">Updating Stocks...</p><span class="price">₹---</span>
+                <button class="buy-btn" style="background:#444;">Soon</button>
+            </div>
+        </div>
+    </div>
 
     <div class="bot-trigger" onclick="toggleAI()"><i class="fas fa-robot" style="color:white; font-size:32px;"></i></div>
 
@@ -113,13 +145,20 @@
 
     <script>
         const KEY = "AIzaSyCBXjCWYhoCfjCciMBHnWpOFwy22bbADOI";
-        let checkCount = 0; // Verification Logic Counter
+        let checkCount = 0;
 
         function toggleMenu() { 
             const m = document.getElementById('side-menu');
             m.style.right = (m.style.right === '0px') ? '-280px' : '0px';
         }
         function toggleAI() { const w = document.getElementById('ai-window'); w.style.display = (w.style.display==='flex')?'none':'flex'; }
+        
+        // Function to Open/Close Sale Page
+        function toggleSale() {
+            const s = document.getElementById('sale-page');
+            s.style.display = (s.style.display === 'flex') ? 'none' : 'flex';
+            if(s.style.display === 'flex') toggleMenu(); // Close menu when opening sale
+        }
 
         async function runChat() {
             const i = document.getElementById('ai-in');
@@ -148,14 +187,13 @@
             document.getElementById('gpay').href = upi;
             document.getElementById('ppay').href = upi;
             document.getElementById('paytm').href = upi;
-            checkCount = 0; // Reset counter for new payment
+            checkCount = 0;
             const b = document.getElementById('v-btn');
             b.innerText = "VERIFY PAYMENT"; b.style.background = "#00ff88";
         }
 
         function copyA(a, t) { navigator.clipboard.writeText(a); alert(t + " Address Copied!"); }
 
-        // New Verification Logic
         function verifyLogic() {
             const b = document.getElementById('v-btn');
             b.innerText = "PROCESSING... ⏳";
@@ -172,6 +210,7 @@
             }, 2500);
         }
 
+        // Generate default cards
         const cards = [
             {n:"Visa Non-Vv", p:"1100", b:"₹15,000", d:"BIN: 4859xx | PlayStore OK", i:"https://img.icons8.com/color/96/visa.png"},
             {n:"Master Non-Vv", p:"850", b:"₹10,500", d:"BIN: 5241xx | FF/PUBG OK", i:"https://img.icons8.com/color/96/mastercard.png"},
@@ -190,4 +229,4 @@
         }
     </script>
 </body>
-    </html>
+</html>
