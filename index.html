@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SQL PREMIUM HUB | RIZWAN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --gold: #ffcc00; --dark: #0b0b0b; --wa: #25d366; --red: #ff4444; --paytm: #00baf2; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; font-family: sans-serif; }
+        body { background: #000; color: white; padding-top: 100px; height: 100dvh; overflow: hidden; }
+
+        /* Header & Nav */
+        .top-line { background: var(--gold); color: #000; position: fixed; top: 0; width: 100%; z-index: 3000; height: 30px; line-height: 30px; font-weight: 900; text-align: center; font-size: 11px; }
+        header { background: #000; border-bottom: 2px solid var(--gold); position: fixed; top: 30px; width: 100%; z-index: 2000; height: 65px; display: flex; align-items: center; justify-content: center; width: 100%; }
+        .logo { font-size: 1.5rem; font-weight: 900; color: var(--gold); }
+        .menu-icon { position: absolute; right: 20px; color: var(--gold); font-size: 1.6rem; cursor: pointer; }
+
+        /* Sidebar */
+        #side-menu { position: fixed; top: 0; right: -280px; width: 270px; height: 100%; background: #0a0a0a; z-index: 4000; transition: 0.3s; padding-top: 60px; border-left: 2px solid var(--gold); }
+        .menu-item { padding: 18px 25px; border-bottom: 1px solid #1a1a1a; display: flex; align-items: center; gap: 15px; color: white; text-decoration: none; font-weight: bold; }
+        .menu-item i { color: var(--gold); width: 20px; }
+
+        /* Cards Grid */
+        .container { padding: 12px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; height: calc(100vh - 100px); overflow-y: auto; padding-bottom: 120px; }
+        .card { background: #111; border: 1px solid #222; border-radius: 15px; padding: 12px; text-align: center; border-bottom: 4px solid #1a1a1a; }
+        .card img { height: 35px; margin-bottom: 8px; }
+        .live-tag { color: #00ff88; font-weight: bold; font-size: 11px; margin-bottom: 4px; display: block; }
+        .card-bal { color: var(--gold); font-weight: 900; font-size: 14px; margin: 4px 0; display: block; }
+        .card-info { font-size: 10px; color: #aaa; margin-bottom: 8px; line-height: 1.2; height: 25px; overflow: hidden; }
+        .price { color: #00ff88; font-size: 1.3rem; font-weight: bold; display: block; margin-bottom: 10px; }
+        .buy-btn { background: var(--gold); color: #000; border: none; width: 100%; padding: 12px; border-radius: 10px; font-weight: 900; cursor: pointer; }
+
+        /* AI Smart Window */
+        #ai-window { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 5000; display: none; flex-direction: column; }
+        .ai-header { background: #111; padding: 15px; display: flex; align-items: center; gap: 15px; font-weight: bold; border-bottom: 1px solid var(--gold); }
+        .ai-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+        .ai-footer { background: #111; padding: 12px; display: flex; gap: 10px; border-top: 1px solid #222; }
+        .ai-footer input { flex: 1; border-radius: 25px; padding: 14px; background: #222; color: white; border: 1px solid #333; outline: none; }
+        .msg { padding: 12px 16px; border-radius: 15px; max-width: 85%; font-size: 0.95rem; }
+        .msg-ai { background: #222; align-self: flex-start; }
+        .msg-user { background: #005c4b; align-self: flex-end; }
+
+        /* Payment Modal (Icons & Paytm Added) */
+        #pay-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 6000; display: none; justify-content: center; align-items: center; padding: 20px; }
+        .pay-box { background: #111; padding: 25px; border: 2px solid var(--gold); border-radius: 25px; width: 100%; max-width: 400px; text-align: center; }
+        .p-btn { background: #1a1a1a; margin: 8px 0; padding: 12px; border-radius: 12px; display: flex; align-items: center; gap: 15px; color: white; text-decoration: none; border: 1px solid #333; font-weight: bold; cursor: pointer; }
+        .p-btn img { width: 25px; height: 25px; border-radius: 5px; }
+        .v-input { width: 100%; padding: 12px; background: #000; border: 1px solid #444; color: #00ff88; text-align: center; border-radius: 10px; margin: 10px 0; font-weight: bold; }
+        .v-btn { background: #00ff88; color: black; border: none; padding: 14px; width: 100%; border-radius: 10px; font-weight: 900; cursor: pointer; }
+        
+        .bot-trigger { position: fixed; bottom: 25px; right: 25px; background: var(--wa); width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 4500; border: 3px solid white; }
+    </style>
+</head>
+<body>
+
+    <div class="top-line">SQL HUB OFFICIAL 💯 ALL CARDS WORKING | FAST DELIVERY</div>
+    
+    <header>
+        <div class="logo">SQL PREMIUM HUB</div>
+        <div class="menu-icon" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+    </header>
+
+    <div id="side-menu">
+        <i class="fas fa-times" onclick="toggleMenu()" style="position:absolute; top:15px; left:15px; color:var(--red); font-size:1.5rem;"></i>
+        <a href="#" class="menu-item" onclick="location.reload()"><i class="fas fa-sync"></i> Refresh Hub</a>
+        <a href="https://t.me/SQL_RRR" class="menu-item" style="color:#0088cc"><i class="fab fa-telegram"></i> Join Telegram</a>
+        <a href="https://wa.me/919012277862" class="menu-item" style="color:var(--wa)"><i class="fab fa-whatsapp"></i> Contact Owner</a>
+    </div>
+
+    <div class="container" id="grid"></div>
+
+    <div class="bot-trigger" onclick="toggleAI()"><i class="fas fa-robot" style="color:white; font-size:32px;"></i></div>
+
+    <div id="ai-window">
+        <div class="ai-header"><i class="fas fa-arrow-left" onclick="toggleAI()"></i> SQL Assistant AI</div>
+        <div class="ai-body" id="chat">
+            <div class="msg msg-ai">Hello Sir! How can I help you today with SQL Hub cards?</div>
+        </div>
+        <div class="ai-footer">
+            <input type="text" id="ai-in" placeholder="Ask about balance..." onkeydown="if(event.key==='Enter') runChat()">
+            <button onclick="runChat()" style="background:none; border:none; color:var(--gold); font-size:1.5rem;"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <div id="pay-modal">
+        <div class="pay-box">
+            <h2 style="color:var(--gold); margin-bottom:10px;">CHECKOUT</h2>
+            <p id="p-amt" style="color:#00ff88; font-weight:900; margin-bottom:15px; font-size:1.4rem;"></p>
+            
+            <a id="gpay" href="#" class="p-btn"><img src="https://img.icons8.com/color/48/google-pay.png"> Google Pay</a>
+            <a id="ppay" href="#" class="p-btn"><img src="https://img.icons8.com/color/48/phone-pe.png"> PhonePe</a>
+            <a id="paytm" href="#" class="p-btn"><img src="https://img.icons8.com/color/48/paytm.png"> Paytm</a>
+            
+            <div class="p-btn" onclick="copyA('bc1qxy2kgdy6jrsq4z62v3860v6lcyv5uvvhu0m6ax', 'BTC BEP20')"><img src="https://img.icons8.com/color/48/bitcoin.png"> Bitcoin (BEP20)</div>
+            <div class="p-btn" onclick="copyA('0xea67ed86d2a3f145a37f008c5bc0c523b50a039a', 'USDT BEP20')"><img src="https://img.icons8.com/color/48/tether.png"> USDT (BEP20)</div>
+
+            <input type="text" id="txid" class="v-input" placeholder="Enter Transaction ID">
+            <button onclick="verifyLogic()" id="v-btn" class="v-btn">VERIFY PAYMENT</button>
+            <button onclick="document.getElementById('pay-modal').style.display='none'" style="color:var(--red); border:none; background:none; margin-top:15px; font-weight:bold; cursor:pointer;">CANCEL</button>
+        </div>
+    </div>
+
+    <script>
+        const KEY = "AIzaSyCBXjCWYhoCfjCciMBHnWpOFwy22bbADOI";
+        let checkCount = 0; // Verification Logic Counter
+
+        function toggleMenu() { 
+            const m = document.getElementById('side-menu');
+            m.style.right = (m.style.right === '0px') ? '-280px' : '0px';
+        }
+        function toggleAI() { const w = document.getElementById('ai-window'); w.style.display = (w.style.display==='flex')?'none':'flex'; }
+
+        async function runChat() {
+            const i = document.getElementById('ai-in');
+            const c = document.getElementById('chat');
+            if(!i.value.trim()) return;
+            const msg = i.value;
+            c.innerHTML += `<div class="msg msg-user">${msg}</div>`;
+            i.value = '';
+            c.scrollTop = c.scrollHeight;
+            try {
+                const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${KEY}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ contents: [{ parts: [{ text: "You are SQL Assistant. Call user 'Sir'. Talk about Non-Vv cards. Don't mention 'Rizwan' unless asked. Quotes from Osho/Karna. User: " + msg }] }] })
+                });
+                const d = await r.json();
+                c.innerHTML += `<div class="msg msg-ai">${d.candidates[0].content.parts[0].text}</div>`;
+            } catch (e) { c.innerHTML += `<div class="msg msg-ai">Sir, server is busy. Try again later.</div>`; }
+            c.scrollTop = c.scrollHeight;
+        }
+
+        function openPay(amt) {
+            document.getElementById('pay-modal').style.display = 'flex';
+            document.getElementById('p-amt').innerText = "Total: ₹" + amt;
+            const upi = `upi://pay?pa=rizwanhasan90122778623@ybl&am=${amt}&cu=INR`;
+            document.getElementById('gpay').href = upi;
+            document.getElementById('ppay').href = upi;
+            document.getElementById('paytm').href = upi;
+            checkCount = 0; // Reset counter for new payment
+            const b = document.getElementById('v-btn');
+            b.innerText = "VERIFY PAYMENT"; b.style.background = "#00ff88";
+        }
+
+        function copyA(a, t) { navigator.clipboard.writeText(a); alert(t + " Address Copied!"); }
+
+        // New Verification Logic
+        function verifyLogic() {
+            const b = document.getElementById('v-btn');
+            b.innerText = "PROCESSING... ⏳";
+            setTimeout(() => {
+                if(checkCount === 0) {
+                    b.innerText = "MANUAL CHECK NEEDED ⚠️ SEND SCREENSHOT";
+                    b.style.background = "orange";
+                    checkCount++;
+                } else {
+                    const res = ["SUCCESS! ✅ CARD UNLOCKED", "PAYMENT PENDING ⏳", "PAYMENT FAILED ❌", "PROCESSING... ⏳"];
+                    b.innerText = res[Math.floor(Math.random()*res.length)];
+                    b.style.background = b.innerText.includes("SUCCESS") ? "#00ff88" : "orange";
+                }
+            }, 2500);
+        }
+
+        const cards = [
+            {n:"Visa Non-Vv", p:"1100", b:"₹15,000", d:"BIN: 4859xx | PlayStore OK", i:"https://img.icons8.com/color/96/visa.png"},
+            {n:"Master Non-Vv", p:"850", b:"₹10,500", d:"BIN: 5241xx | FF/PUBG OK", i:"https://img.icons8.com/color/96/mastercard.png"},
+            {n:"Amex Non-Vv", p:"600", b:"₹6,000", d:"BIN: 3714xx | Premium OK", i:"https://img.icons8.com/color/96/amex.png"}
+        ];
+        const g = document.getElementById('grid');
+        for(let i=1; i<=30; i++) {
+            let c = cards[i % 3];
+            g.innerHTML += `
+            <div class="card">
+                <img src="${c.i}"><span class="live-tag">LIVE ✅</span>
+                <b>${c.n} #${i}</b><span class="card-bal">Bal: ${c.b}</span>
+                <p class="card-info">${c.d}</p><span class="price">₹${c.p}</span>
+                <button class="buy-btn" onclick="openPay('${c.p}')">Buy Now</button>
+            </div>`;
+        }
+    </script>
+</body>
+      </html>
